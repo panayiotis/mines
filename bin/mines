@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+# coding: utf-8
+
+require 'thor'
+require_relative '../lib/generators/application'
+module Mines
+  class Cli < Thor
+    desc "new APP_NAME", "Create Application APP_NAME"
+    def new(name)
+      puts "Create App #{name}"
+      ARGV.shift
+      Generator::Application.start ARGV
+    end
+  end
+end
+
+Mines::Cli.start ARGV
