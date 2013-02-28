@@ -2,14 +2,41 @@
 # coding: utf-8
 
 require 'thor'
-require_relative '../lib/generators/application'
+require_relative '../lib/utilities'
+
+# require all generators
+Dir[File.dirname(__FILE__) + '/../lib/generators/*.rb'].each {|file| require file }
+
 module Mines
+  
   class Cli < Thor
     desc "new APP_NAME", "Create Application APP_NAME"
     def new(name)
       puts "Create App #{name}"
       ARGV.shift
       Generator::Application.start ARGV
+    end
+    
+    # This prints more help than thor
+    def help(*args)
+       puts args.size
+       super
+       puts "print my help:"
+       Utilities::print_command("new APPNAME", "Create a Ruby in Mines application. "+
+       "A directory will be created storing all the files of the application.")
+       Utilities::print_command("generate miner NAME", "Lorem ipsum dolor sit amet, consectetur adipiscing elit."+
+       " Proin nulla libero, blandit ut interdum et, viverra non velit. Phasellus sem erat, porttitor vel imperdiet"+
+       " nec, bibendum non nibh. Maecenas nibh. ")
+    end
+    
+    desc "generate model|miner NAME", "Create a miner or model with NAME"
+    method_option :evented, :type => :boolean, :default => false
+    def generate(gen,name)
+
+      puts "gen: #{gen} name: #{name}"
+      ARGV.shift
+      ARGV.shift
+      Generator::Miner.start ARGV
     end
   end
 end

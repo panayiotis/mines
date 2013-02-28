@@ -5,19 +5,17 @@ Gem::Specification.new do |s|
   s.summary = 'Data mining application framework.'
   s.description = 'Ruby in Mines is a framework for creating data mining application prototypes that focus on processing near real-time human generated content.'
 
-  #s.required_ruby_version = '>= 1.9.3'
-  #s.required_rubygems_version = '>= 1.8.11'
-
   s.license = 'MIT'
 
   s.author = 'Panayiotis Vlantis'
   s.email = 'p.vlantis@di.uoa.gr'
-  #s.homepage = 'http://'
+  s.homepage = 'https://github.com/panayiotis/mines'
 
   s.bindir = 'bin'
   s.executables << 'mines'
   s.require_paths << "lib"
-  s.files = Dir['lib/**/*.rb'] + Dir['bin/*.rb']
+  s.files = Dir['bin/*.rb'] + Dir['lib/*.rb'] + Dir['lib/**/*.rb'] + Dir['lib/generators/templates/*.erb']
 
   s.add_dependency 'thor'
+  s.add_dependency 'colored'
 end

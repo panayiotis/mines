@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+# coding: utf-8
+
+class <%= name.capitalize %>
+  log_name :<%= name %>  
+
+  def do_work
+    @log.debug "log working"
+    while true
+      #Do work
+      `sleep 1`
+    end
+  end # end do_work
+end
+
+# Initialize <%= name.capitalize %> class
+<%= name.capitalize %>.new.do_work
