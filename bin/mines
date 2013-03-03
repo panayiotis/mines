@@ -8,15 +8,16 @@ puts require_relative '../config/help'
 puts require_relative '../lib/logging'
 puts require_relative '../lib/mines'
 
-# require all generators
-#Dir[File.dirname(__FILE__) + '/../lib/generators/*.rb'].each {|file| puts require file }
+# require all generators in lib
+Dir[File.dirname(__FILE__) + '/../lib/generators/*.rb'].each {|file| puts require_relative file }
 
 module Mines
-
+  
   class Cli < Thor
     
+    include Logging
+    
     def initialize *args
-      @log = Mines.log
       super
     end
     
@@ -24,16 +25,16 @@ module Mines
     desc Help.new[:sum], Help.new[:desc]
     def new(name)
       ARGV.shift
-      @log.debug "command 'new' with arguments: " + ARGV.join(", ")
+      log.debug "command 'new' with arguments: " + ARGV.join(", ")
       Generator::Application.start ARGV
     end
     
     # help
     def help *args
        if args.empty?
-         @log.debug "command 'help' with no arguments"
+         log.debug "command 'help' with no arguments"
        else
-         @log.debug "command 'help' with arguments: #{args.join(', ').to_s}"
+         log.debug "command 'help' with arguments: #{args.join(', ').to_s}"
        end
        puts "Summary:"
        super
@@ -47,11 +48,14 @@ module Mines
       puts "gen: #{gen} name: #{name}"
       ARGV.shift
       ARGV.shift
-      @log.debug "command 'generate #{gen} #{name}' with arguments: #{ARGV.join(', ')}"
+      log.debug "command 'generate #{gen} #{name}' with arguments: #{ARGV.join(', ')}"
       Generator::Miner.start ARGV
     end
   end
 end
 
+# Check if 'mines' is invoked in the root directory of a Mines App
 Mines.mines_app_check
+
+# Start client
 Mines::Cli.start ARGV
