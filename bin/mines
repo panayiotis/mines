@@ -1,44 +1,57 @@
 #!/usr/bin/env ruby
 # coding: utf-8
 
-require 'thor'
-require_relative '../lib/utilities'
+puts require 'thor'
+puts require_relative '../lib/utilities'
+puts require_relative '../lib/help'
+puts require_relative '../config/help'
+puts require_relative '../lib/logging'
+puts require_relative '../lib/mines'
 
 # require all generators
-Dir[File.dirname(__FILE__) + '/../lib/generators/*.rb'].each {|file| require file }
+#Dir[File.dirname(__FILE__) + '/../lib/generators/*.rb'].each {|file| puts require file }
 
 module Mines
-  
+
   class Cli < Thor
-    desc "new APP_NAME", "Create Application APP_NAME"
+    
+    def initialize *args
+      @log = Mines.log
+      super
+    end
+    
+    # new
+    desc Help.new[:sum], Help.new[:desc]
     def new(name)
-      puts "Create App #{name}"
       ARGV.shift
+      @log.debug "command 'new' with arguments: " + ARGV.join(", ")
       Generator::Application.start ARGV
     end
     
-    # This prints more help than thor
-    def help(*args)
-       puts args.size
+    # help
+    def help *args
+       if args.empty?
+         @log.debug "command 'help' with no arguments"
+       else
+         @log.debug "command 'help' with arguments: #{args.join(', ').to_s}"
+       end
+       puts "Summary:"
        super
-       puts "print my help:"
-       Utilities::print_command("new APPNAME", "Create a Ruby in Mines application. "+
-       "A directory will be created storing all the files of the application.")
-       Utilities::print_command("generate miner NAME", "Lorem ipsum dolor sit amet, consectetur adipiscing elit."+
-       " Proin nulla libero, blandit ut interdum et, viverra non velit. Phasellus sem erat, porttitor vel imperdiet"+
-       " nec, bibendum non nibh. Maecenas nibh. ")
+       puts "Now print my help :)\nYeah!"
     end
     
-    desc "generate model|miner NAME", "Create a miner or model with NAME"
+    # generate
+    desc Help.generate[:sum], Help.generate[:desc]
     method_option :evented, :type => :boolean, :default => false
     def generate(gen,name)
-
       puts "gen: #{gen} name: #{name}"
       ARGV.shift
       ARGV.shift
+      @log.debug "command 'generate #{gen} #{name}' with arguments: #{ARGV.join(', ')}"
       Generator::Miner.start ARGV
     end
   end
 end
 
+Mines.mines_app_check
 Mines::Cli.start ARGV

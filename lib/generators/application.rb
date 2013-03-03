@@ -20,6 +20,7 @@ module Generator
       empty_directory name + "/miners"
       empty_directory name + "/lib"
       empty_directory name + "/log"
+      empty_directory name + "/config"
     end
   end
 end
