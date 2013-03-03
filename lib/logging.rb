@@ -6,7 +6,11 @@ require 'logger'
 module Mines::Logging
   def log
     if defined?(@log).nil?
-      @log = Logger.new 'log/mines.log'
+      if Dir.exists?('log')
+        @log = Logger.new 'log/mines.log'
+      else
+        @log = Logger.new 'mines.log'
+      end
       @log.datetime_format= "%H:%M:%S"
       @log.formatter = proc do |severity, datetime, progname, msg|
         "#{severity} #{datetime.strftime("%H:%M:%S")}: -- #{msg}\n"

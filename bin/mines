@@ -1,15 +1,16 @@
 #!/usr/bin/env ruby
 # coding: utf-8
 
-puts require 'thor'
-puts require_relative '../lib/utilities'
-puts require_relative '../lib/help'
-puts require_relative '../config/help'
-puts require_relative '../lib/logging'
-puts require_relative '../lib/mines'
+require 'thor'
+require_relative '../lib/utilities'
+require_relative '../lib/help'
+require_relative '../config/help'
+require_relative '../lib/logging'
+require_relative '../lib/mines'
 
 # require all generators in lib
-Dir[File.dirname(__FILE__) + '/../lib/generators/*.rb'].each {|file| puts require_relative file }
+mines_root = File.expand_path(File.dirname(__FILE__)+'/..')
+Dir[mines_root+'/lib/generators/*.rb'].each {|file| require file }
 
 module Mines
   
@@ -25,7 +26,7 @@ module Mines
     desc Help.new[:sum], Help.new[:desc]
     def new(name)
       ARGV.shift
-      log.debug "command 'new' with arguments: " + ARGV.join(", ")
+      log.debug "command 'new' with arguments: #{ARGV.join(', ')}"
       Generator::Application.start ARGV
     end
     
@@ -45,6 +46,7 @@ module Mines
     desc Help.generate[:sum], Help.generate[:desc]
     method_option :evented, :type => :boolean, :default => false
     def generate(gen,name)
+      Mines.mines_app_check
       puts "gen: #{gen} name: #{name}"
       ARGV.shift
       ARGV.shift
@@ -55,7 +57,7 @@ module Mines
 end
 
 # Check if 'mines' is invoked in the root directory of a Mines App
-Mines.mines_app_check
+#Mines.mines_app_check
 
 # Start client
 Mines::Cli.start ARGV

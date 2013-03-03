@@ -1,9 +1,13 @@
 # coding: utf-8
 
 require 'thor'
-module Generator
+require_relative '../logging'
+
+module Mines::Generator
+
   class Miner < Thor::Group
     include Thor::Actions
+    include Mines::Logging
 
     # Define arguments and options
     argument :name, :desc => "The name of the miner", :required => true
@@ -19,5 +23,7 @@ module Generator
       puts options[:evented]
       #template "templates/miner.erb", "miners/#{name}.rb"
     end
-  end
-end
+    
+  end # class
+
+end # module
