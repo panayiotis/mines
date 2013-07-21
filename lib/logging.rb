@@ -3,7 +3,13 @@
 require 'logger'
 require 'colored' # TODO: Remove maybe
 require_relative 'application' # needed by config/application
-require './config/application'
+
+# ./config/application may not have been created yet
+begin
+  require './config/application'
+rescue Exception => e  
+  require_relative '../config/application'
+end
 
 module Mines
 

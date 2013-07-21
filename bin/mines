@@ -48,7 +48,7 @@ module Mines
     
     # generate
     desc Help.generate[:sum], Help.generate[:desc]
-    method_option :evented, :type => :boolean, :default => false
+    #method_option :evented, :type => :boolean, :default => false
     def generate(gen,name)
       Mines.mines_app_check
       puts "gen: #{gen} name: #{name}"
@@ -61,7 +61,7 @@ module Mines
 end
 
 # Check if 'mines' is invoked in the root directory of a Mines App
-#Mines.mines_app_check
+#Mines.mines_app_check #TODO This code can not be here
 
 # Start client
 Mines::Cli.start ARGV

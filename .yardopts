@@ -1,6 +1,5 @@
 --title "Ruby in Mines Documentation"
 --plugin yard-minitest-spec
---plugin yard-thor
 bin/mines
 lib/**/*.rb
 spec/*.rb

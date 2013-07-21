@@ -17,10 +17,9 @@ module Mines
   # Exit if mines is invokated outside application root
   def mines_app_check
     if not in_app_root?
-      puts "Error:".red
       print "It seems your current directory: "
-      print File.expand_path('.').yellow
-      puts " does not contain a Mines application."
+      puts File.expand_path('.').yellow
+      puts "does not contains a Mines application."
       puts "You can create one by invoking: " + "mines new APPNAME".blue.bold
       exit 0
     end
