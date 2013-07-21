@@ -5,9 +5,9 @@ Generators are used to create directories, files with boilerplate code etc
 
 ## Generators
 
-* Application
+* **Application**  
   creates the default file structure and prints appropriate messages
 
-* <tt>Miner </tt>  
+* **Miner**  
       creates spesific miners based on templates
 
