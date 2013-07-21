@@ -2,6 +2,7 @@
 # coding: utf-8
 
 require 'thor'
+require 'awesome_print'
 require_relative '../lib/utilities'
 require_relative '../lib/help'
 require_relative '../config/help'
@@ -49,13 +50,18 @@ module Mines
     # generate
     desc Help.generate[:sum], Help.generate[:desc]
     #method_option :evented, :type => :boolean, :default => false
-    def generate(gen,name)
-      Mines.mines_app_check
-      puts "gen: #{gen} name: #{name}"
-      ARGV.shift
-      ARGV.shift
-      log.debug "command 'generate #{gen} #{name}' with arguments: #{ARGV.join(', ')}"
-      Generator::Miner.start ARGV
+    # generate a miner
+    def generate(type,name)
+      Mines.mines_app_check #TODO Test
+      types = %w{twitter network process metrics}
+      unless types.include? type
+        puts "The type of the miner could be either twitter or network or process or metrics"
+        puts "you typed: #{type}"
+        exit 0
+      end
+      puts "Generate a #{type} miner with name: #{name}"
+      
+      Generator::Miner.start [type, name]
     end
   end
 end

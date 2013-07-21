@@ -5,8 +5,8 @@ Mines::Help.configure do |config|
                 desc: "Create Application APP_NAME" , 
                 help: ""
                }
-  config.generate = { sum: "generate model|miner NAME" , 
-                     desc: "Create a miner or model with NAME" , 
+  config.generate = { sum: "generate [twitter|network|process|metrics] NAME" , 
+                     desc: "Create a twitter or network or process or metrics miner" , 
                      help: ""
                     }
 end
