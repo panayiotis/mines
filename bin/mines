@@ -14,6 +14,8 @@ Dir[mines_root+'/lib/generators/*.rb'].each {|file| require file }
 
 module Mines
   
+  # The mines executable. It subclasses Thor and
+  # invocates generators according to parameters
   class Cli < Thor
     
     include Logging
@@ -22,8 +24,10 @@ module Mines
       super
     end
     
-    # new
+    
     desc Help.new[:sum], Help.new[:desc]
+    # Define the 'new' action. Invocate the new generator
+    # @param name The name of the new application
     def new(name)
       ARGV.shift
       log.debug "command 'new' with arguments: #{ARGV.join(', ')}"

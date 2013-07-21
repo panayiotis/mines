@@ -1,6 +1,6 @@
 # coding: utf-8
 
-require 'colored'
+require 'colored' # TODO Remove dep
 
 module Mines
   extend self
@@ -14,7 +14,7 @@ module Mines
     return true
   end
   
-  # Exit if not in application root dir
+  # Exit if mines is invokated outside application root
   def mines_app_check
     if not in_app_root?
       puts "Error:".red

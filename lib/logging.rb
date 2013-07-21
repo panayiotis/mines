@@ -1,6 +1,7 @@
 # coding: utf-8
 
 require 'logger'
+require 'colored' # TODO: Remove maybe
 require_relative 'application' # needed by config/application
 require './config/application'
 
@@ -26,7 +27,7 @@ module Mines
         @log = Logger.new log_device
         @log.datetime_format= "%H:%M:%S"
         @log.formatter = proc do |severity, datetime, progname, msg|
-          "#{msg}\n"
+          "#{msg}\n".yellow
         end
       end
       @log
