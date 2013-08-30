@@ -25,6 +25,8 @@ module Mines::Generator
       File.dirname(__FILE__)
     end
     
+    # Use the appropriate template file according to type
+    # and put the generated file in miners directory
     def create_miner_file
       puts "Copy miner template"
       #puts options[:evented]

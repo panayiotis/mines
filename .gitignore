@@ -3,3 +3,5 @@ tmp/
 mines.log
 .yardoc/
 doc/
+reinstall
+*.gem

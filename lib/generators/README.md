@@ -1,9 +1,9 @@
-# Generators
+### Generators
 
 Generators are used to create directories, files with boilerplate code etc
 
 
-## Generators
+#### Generators
 
 * **Application**  
   creates the default file structure and prints appropriate messages

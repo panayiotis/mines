@@ -1,6 +1,10 @@
 # coding: utf-8
 
+require 'bundler/setup'
+require 'json'
 require 'colored' # TODO Remove dep
+require_relative 'redis_store'
+require_relative 'utilities'
 
 module Mines
   extend self

@@ -3,7 +3,7 @@
 Ruby in Mines is a ruby framework for creating data-mining application prototypes that focus on processing near real-time human generated content. 
 
 Install the gem and run with:  
-<tt>gem install mines --pre </tt>
+<tt>gem install mines </tt>
   
 **Note:**  
 This project is under development. It has limited capabilities yet.
