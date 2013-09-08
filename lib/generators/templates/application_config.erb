@@ -1,3 +1,19 @@
 # coding: utf-8
+## Configuration file for your app
 
-# Fix this Template!
+## Declare the configuration parameters you want to use
+Application.config do
+  parameter :var1
+  parameter :var2
+  parameter :var3
+end
+
+## Change their values
+Application.config do
+  var1  "value"
+  var2  ['one','two','three']
+  var3  { :one=>1, :two=>2 }
+end
+
+## Usage example
+# puts Application.var1

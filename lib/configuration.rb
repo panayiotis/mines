@@ -31,10 +31,13 @@ module Application
   end
 end
 
+
+# Load default configuration
 require_relative '../config/application'
 
+# Load user's configuration
 begin
   require './config/application'
-rescue
+rescue Exception
   puts red "Warning: Configuration file ./config/application.rb is missing"
 end

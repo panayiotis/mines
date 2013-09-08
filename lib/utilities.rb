@@ -7,6 +7,44 @@ def blue(text); "\033[34m#{text}\033[0m" end
 def red(text); "\033[31m#{text}\033[0m" end
 def yellow(text); "\033[33m#{text}\033[0m" end
 
+module Mines
+  extend self
+
+  # Check if mines is executed inside a mines application directory
+  def in_app_root?
+    # simply check if basic dirs exist
+    %w{ miners lib log config config/application.rb}.each do |file|
+      return false if not File.exists?(file)
+    end
+    return true
+  end
+  
+  # Exit if mines is invokated outside application root
+  def mines_app_check
+    if not in_app_root?
+      print "It seems your current directory: "
+      puts File.expand_path('.').yellow
+      puts "does not contains a Mines application."
+      puts "You can create one by invoking: " + "mines new APPNAME".blue.bold
+      exit 0
+    end
+  end
+end
+
+
+module Mines
+  extend self
+  
+  # Examines if a gem axists
+  #
+  # @param gem [String] the gem's name
+  # @return [Boolean] If gem exists or not
+  def gem_exists? gem
+    ! Gem::Specification.find_all_by_name(gem).empty?
+  end
+
+end
+
 def print_tweet(user, text)
   width = Integer(`tput cols`) - 18
   sum = 0

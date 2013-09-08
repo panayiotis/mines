@@ -1,15 +1,39 @@
 # coding: utf-8
 
 require 'logger'
-require 'colored' # TODO: Remove maybe
-require_relative 'application' # needed by config/application
+
+# Configuration
+require_relative 'configuration'
+
+#require_relative 'application' # needed by config/application
 
 # ./config/application may not have been created yet
-begin
-  require './config/application'
-rescue Exception => e  
-  require_relative '../config/application'
+#begin
+#  require './config/application'
+#rescue Exception => e  
+#  require_relative '../config/application'
+#end
+
+unless defined?(Application.logname).nil?
+  @log ||= Logger.new "log/#{Application.logname}"
+else
+  @log ||= Logger.new 'log/mines.log'
 end
+
+@log.datetime_format= "%H:%M:%S"
+@log.formatter = proc do |severity, datetime, progname, msg|
+  "#{severity} #{datetime} #{msg}\n"
+end
+
+def log_name name
+  @log ||=  Logger.new 'log/#{name}.log'
+  @log.datetime_format= "%H:%M:%S"
+  @log.formatter = proc do |severity, datetime, progname, msg|
+    "#{severity} #{datetime} #{msg}\n"
+  end  
+end
+
+=begin
 
 module Mines
 
@@ -40,4 +64,6 @@ module Mines
     end # end def
   end # end module
 end # end module
+
+=end
 
