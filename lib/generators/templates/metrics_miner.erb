@@ -1,0 +1,28 @@
+#!/usr/bin/env ruby
+# coding: utf-8
+
+## Gem dependencies are managed by Bundler inside project's Gemfile
+require 'bundler'
+Bundler.require :network
+
+log_name :<%= name %>  
+
+## Connect to a TimeSeries metrics store
+## Data is been pushed constantly to the timeseries by
+## the process miner
+@ts = TimeSeries.new("<%= name %>")
+
+
+## Start Event Machine
+EM.run do
+  
+  ## Periodic execution
+  EM::PeriodicTimer.new(13){
+    print blue '.'
+  }
+  
+  ## Periodic execution  
+  EM::PeriodicTimer.new(1){
+    print red '.'
+  }
+end # end EM

@@ -1,0 +1,111 @@
+#!/usr/bin/env ruby
+# coding: utf-8
+
+## Gem dependencies are managed by Bundler inside project's Gemfile
+require 'bundler'
+Bundler.require :network
+
+log_name :<%= name %>  
+
+## Create an Object Queue
+queue = ObjectQueue.new "<%= name %>"
+
+## Provide your Twitter Streaming API keys and credentials
+##
+## example:
+#  TweetStream.configure do |config|
+#    config.consumer_key       = "mZ0gsfwgA"
+#    config.consumer_secret    = "nqwQqELrvdb6C"
+#    config.oauth_token        = "OfIUtfTmP6NQuwWKlH"
+#    config.oauth_token_secret = 'u4bFMpQxfgwZl'
+#    config.auth_method = :oauth
+#  end
+
+## It is recommended to provide your credentials
+## in a different file outside version control system
+## to avoid publishing them.
+## example:
+require_relative '../../twitter_credentials'
+
+## Initialize TweetStream Client
+client = TweetStream::Client.new
+
+## Print custom messages when client receives special event messages
+## See also: https://dev.twitter.com/docs/streaming-apis/messages
+client.on_error do |message|
+  msg = "\nError message: #{message}\n"+
+        "An HTTP error is encountered in the processing of the stream. "+
+        "Note that TweetStream will automatically try to reconnect, "+
+        "this is for reference only. Don't panic!"
+  puts red msg
+  @lod.error msg
+end
+client.on_unauthorized do
+  msg = "\nUnauthorized.\n"+
+        "An HTTP status 401 is encountered while connecting to Twitter. "+ 
+        "This could happen when system clock drift has occured."
+  puts red msg
+  @log.error msg
+end
+client.on_inited do
+  msg = "Connection Established"
+  puts green msg
+  @log.info msg
+end
+client.on_no_data_received do
+  msg = "\nNo data was received from the server and a stall occurred. "+
+        "Twitter defines this to be 90 seconds."
+  puts red msg
+  @log.info msg
+end
+client.on_delete do |status_id, user_id|
+  msg = "\nStatus deletion notice: user: #{user_id} status: #{status_id}"
+  puts yellow msg
+  @log.info msg
+end
+client.on_reconnect do |timeout, retries|
+  msg = "Reconnect Timeout: #{timeout} retries: #{retries}"
+  puts red msg
+  @log.info msg
+end
+client.on_limit do |skip_count|
+  msg = "\nA rate limit notice is received from the Twitter stream.\n"+
+        "Discarded Count: #{skip_count}"
+  puts yellow msg
+  @log.info msg
+end
+client.on_enhance_your_calm do
+  msg = "\nEnhance your calm"
+  puts yellow msg
+  @log.info msg
+end
+
+## Make a call to the statuses/filter method of the Streaming API,
+## you may provide :follow, :track or :locations.
+##
+##   :track      Phrases of keywords to track
+##   :follow     A list of user IDs, indicating the
+##               users to return statuses for in the stream.
+##   :locations  Specifies a set of bounding boxes to track
+##               e.g. :locations => [-122.75,36.8,-121.75,37.8,-74,40,-73,41]                
+##
+##   example:    tracking common greek words
+client.filter(:track => %w( μια το να και το του της τα τι
+                            για δεν στο στον στην με από απο
+                            θα τις οι μου) ) do |status|
+
+  ## status is an object of class Tweet
+  
+  ## Print the user's screen name
+  # puts blue status.user.screen_name
+  
+  ## Print the tweet's text
+  # puts green status.text
+  
+  ## Print a blue dot to indicate a tweet has been received
+  print blue "." 
+  
+  ## Push the status to the object queue
+  ## the object queue will marshal the object so
+  queue.push(status)
+end

@@ -1,7 +1,32 @@
 #!/usr/bin/env ruby
 # coding: utf-8
 
-require 'mines'
+## Gem dependencies are managed by Bundler inside project's Gemfile
+require 'bundler'
+Bundler.require :process
 
 log_name :<%= name %>  
 
+@log.info "Process miner pid: #{Process.pid}"
+
+## Connect to an Object Queue
+## elementes are pushed to this queue by the network miner
+queue = ObjectQueue.new "<%= name %>"
+
+## Create a timeseries metrics store to
+## save the occurence rate for something
+ts = TimeSeries.new("<%= name %>")
+
+## Start the process loop
+loop {
+  ## Get en element from the queue
+  element = queue.pop
+  
+  ##
+  ##... Process element ...
+  ##
+
+  ## Push some metric to the time-series
+  ts.push ("...")
+  
+} # end loop

@@ -14,7 +14,7 @@ module Mines::Generator
   # Accepts as an argument the name of the new application. A new directory with this name will be created
   class Application < Thor::Group
     include Thor::Actions
-    include Mines::Logging
+    #include Mines::Logging
 
     # Define arguments and options
     argument :name
@@ -29,13 +29,14 @@ module Mines::Generator
     # - Files: TODO
     # also prints appropriate messages
     def create_directory_structure
-      log.info "Creating directory structure in dir: " + name
+      #@log.info "Creating directory structure in dir: " + name
       empty_directory name
       empty_directory name + "/miners"
       empty_directory name + "/lib"
       empty_directory name + "/log"
       empty_directory name + "/config"
       template "templates/application_config.erb", "#{name}/config/application.rb"
+      template "templates/Gemfile.erb", "#{name}/Gemfile"      
       puts "Application created successfully! ".green
       print "Type "
       print "'cd #{name}' ".yellow

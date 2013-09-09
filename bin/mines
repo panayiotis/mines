@@ -3,7 +3,7 @@
 
 require 'thor'
 require_relative '../lib/utilities'
-require_relative '../lib/logging'
+#require_relative '../lib/logging'
 require_relative '../lib/mines'
 
 # require all generators in lib
@@ -16,7 +16,7 @@ module Mines
   # invocates generators according to parameters
   class Cli < Thor
     
-    include Logging
+    #include Logging
     
     def initialize *args
       super
@@ -28,17 +28,17 @@ module Mines
     # @param name The name of the new application
     def new(name)
       ARGV.shift
-      log.debug "command 'new' with arguments: #{ARGV.join(', ')}"
+      #@log.debug "command 'new' with arguments: #{ARGV.join(', ')}"
       Generator::Application.start ARGV
     end
     
     # help
     def help *args
-       if args.empty?
-         log.debug "command 'help' with no arguments"
-       else
-         log.debug "command 'help' with arguments: #{args.join(', ').to_s}"
-       end
+      if args.empty?
+        #@log.debug "command 'help' with no arguments"
+      else
+        #@log.debug "command 'help' with arguments: #{args.join(', ').to_s}"
+      end
        puts "Summary:"
        super
        puts "Now print my help :)\nYeah!"

@@ -13,7 +13,7 @@ module Mines::Generator
   # - Metrics
   class Miner < Thor::Group
     include Thor::Actions
-    include Mines::Logging
+    #include Mines::Logging
 
     # Define arguments and options
     argument :type, :desc => "The type of the miner, [Network,Process,Metrics]", :required => true
@@ -32,7 +32,15 @@ module Mines::Generator
       #puts options[:evented]
       template "templates/#{type}_miner.erb", "miners/#{name}.rb"
     end
-    
+
+    # Use the appropriate template file according to type
+    # and put the generated file in miners directory
+    def create_miner_spec
+      puts "Copy miner spec template"
+      #puts options[:evented]
+      template "templates/miner_spec.erb", "spec/#{name}_spec.rb"
+    end
+        
   end # class
 
 end # module

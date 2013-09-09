@@ -1,0 +1,32 @@
+#!/usr/bin/env ruby
+# coding: utf-8
+
+## Gem dependencies are managed by Bundler inside project's Gemfile
+require 'bundler'
+Bundler.require :network
+
+#log_name :<%= name %>  
+
+## Use event Machine for non-blocking IO
+## or Threads for blocking IO
+
+## Create Thread example
+Thread.new { loop { print green '.'; `sleep 1` } }
+
+# Start Event Machine
+EM.run do
+  
+  ## Periodic execution
+  EM::PeriodicTimer.new(1){
+    print blue '.'
+    ## Avoid blocking commands inside the Reactor.
+    ## This 'sleep' is blocking the other
+    ## timer too. Use Threads instead.
+    `sleep 1` 
+  }
+  
+  ## Periodic execution  
+  EM::PeriodicTimer.new(0.5){
+    print red '.'
+  }
+end # end EM

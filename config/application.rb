@@ -1,6 +1,4 @@
 # This file provides some default config options
-# It should be copied to every app's config folder
-
 
 Application.config do
   parameter :logname
@@ -8,6 +6,6 @@ Application.config do
 end
 
 Application.config do
-  logname  "hashtags.log"
+  logname  "mines.log"
   var  'default var'
 end

@@ -14,10 +14,17 @@ require_relative 'configuration'
 #  require_relative '../config/application'
 #end
 
+
+# Check if log directory exists
+log_dir = "log"
+unless File.exists?(log_dir) && File.directory?(log_dir)
+  log_dir="."
+end
+
 unless defined?(Application.logname).nil?
-  @log ||= Logger.new "log/#{Application.logname}"
+  @log ||= Logger.new "#{log_dir}/#{Application.logname}"
 else
-  @log ||= Logger.new 'log/mines.log'
+  @log ||= Logger.new '#{log_dir}/mines.log'
 end
 
 @log.datetime_format= "%H:%M:%S"
@@ -26,7 +33,7 @@ end
 end
 
 def log_name name
-  @log ||=  Logger.new 'log/#{name}.log'
+  @log ||=  Logger.new '#{log_dir}/#{name}.log'
   @log.datetime_format= "%H:%M:%S"
   @log.formatter = proc do |severity, datetime, progname, msg|
     "#{severity} #{datetime} #{msg}\n"
