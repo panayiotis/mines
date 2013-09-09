@@ -15,8 +15,8 @@ Application.config do
   var1  "value"
   var2  ['one','two','three']
   var3  { :one=>1, :two=>2 }
-  logname  "<%= name %>.log"
-  app_prefix "<%= name %>"
+  logname  "hashtags.log"
+  app_prefix "app"
 end
 
 

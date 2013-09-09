@@ -1,0 +1,24 @@
+source 'https://rubygems.org'
+
+gem 'minitest'
+
+group :network do
+  gem 'mines' , :git => 'git://github.com/panayiotis/mines.git'
+  gem 'tweetstream'     # Twitter Streaming API library
+end
+
+group :process do
+  gem 'mines' , :git => 'git://github.com/panayiotis/mines.git'
+  gem 'json'
+  gem 'time_series' , :git => 'git://github.com/panayiotis/time_series.git'
+  gem 'twitter'
+  gem 'awesome_print'
+end
+
+group :metrics do
+  gem 'mines' , :git => 'git://github.com/panayiotis/mines.git'
+  gem 'time_series' , :git => 'git://github.com/panayiotis/time_series.git'
+  gem 'json'
+  gem 'eventmachine'
+  gem 'awesome_print'  
+end
