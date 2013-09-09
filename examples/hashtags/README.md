@@ -14,6 +14,9 @@ Create the process miner:
 Create the metrics miner:  
 <tt>mines generate metrics metrics</tt>
 
+Resolve project's dependencies with bundler:  
+<tt>bundle install</tt>
+
 Each miner is independent from the others,
 they use Message Queues to communicate and a [TimeSeries metrics store](https://github.com/panayiotis/time_series)
 to share data.
