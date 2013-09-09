@@ -1,28 +1,37 @@
-Gem::Specification.new do |s|
-  s.platform = Gem::Platform::RUBY
-  s.name = 'mines'
-  s.version = '0.0.1'
-  s.summary = 'Data mining application framework.'
-  s.description = 'Ruby in Mines is a framework for creating data mining application prototypes that focus on processing near real-time human generated content.'
+# coding: utf-8
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
-  s.license = 'MIT'
 
-  s.author = 'Panayiotis Vlantis'
-  s.email = 'p.vlantis@di.uoa.gr'
-  s.homepage = 'https://github.com/panayiotis/mines'
+Gem::Specification.new do |spec|
+  spec.platform = Gem::Platform::RUBY
+  spec.name = 'mines'
+  spec.version = '0.0.1'
+  spec.summary = 'Data mining application framework.'
+  spec.description = 'Ruby in Mines is a framework for creating data mining application prototypes that focus on processing near real-time human generated content.'
 
-  s.bindir = 'bin'
-  s.executables << 'mines'
-  s.require_paths << "lib"
-  s.files = Dir['bin/*.rb'] + Dir['lib/*.rb'] + Dir['lib/**/*.rb'] + Dir['lib/generators/templates/*.erb']
+  spec.license = 'MIT'
 
-  s.add_development_dependency "bundler", "~> 1.3"
-  s.add_development_dependency "rake"
-  s.add_development_dependency "minitest"
+  spec.author = 'Panayiotis Vlantis'
+  spec.email = 'p.vlantis@di.uoa.gr'
+  spec.homepage = 'https://github.com/panayiotis/mines'
+
+  #spec.bindir = 'bin'
+  #spec.executables << 'mines'
+  #spec.require_paths = ["lib"]
+  #spec.files = Dir['bin/*.rb'] + Dir['lib/*.rb'] + Dir['lib/**/*.rb'] + Dir['lib/generators/templates/*.erb']
+  spec.files         = `git ls-files`.split($/)
+  spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
+  spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
+  spec.require_paths = ["lib"]
   
-  s.add_dependency 'thor'
-  s.add_dependency 'colored'
-  s.add_dependency 'redis'
-  s.add_dependency 'hiredis'
-  s.add_dependency 'twitter'      
+  spec.add_development_dependency "bundler", "~> 1.3"
+  spec.add_development_dependency "rake"
+  spec.add_development_dependency "minitest"
+  
+  spec.add_dependency 'thor'
+  spec.add_dependency 'colored'
+  spec.add_dependency 'redis'
+  spec.add_dependency 'hiredis'
+  spec.add_dependency 'twitter'      
 end
